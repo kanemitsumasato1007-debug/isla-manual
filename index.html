@@ -277,31 +277,41 @@
       display: flex;
       align-items: center;
       gap: 6px;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      scrollbar-width: none;
       margin-top: 26px;
+      padding-bottom: 6px;
+      -webkit-overflow-scrolling: touch;
     }
+    .flow-bar::-webkit-scrollbar { display: none; }
     .flow-step {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 6px;
+      gap: 8px;
+      background: rgba(201,162,23,0.13);
+      border: 1px solid rgba(201,162,23,0.38);
+      border-radius: 99px;
+      padding: 6px 14px 6px 6px;
+      flex-shrink: 0;
+      backdrop-filter: blur(4px);
     }
     .flow-num {
-      width: 36px; height: 36px;
-      background: var(--gold);
+      width: 26px; height: 26px;
+      background: linear-gradient(135deg, var(--gold), #e8c040);
       color: var(--navy);
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 15px; font-weight: 800;
+      font-size: 13px; font-weight: 800;
       flex-shrink: 0;
     }
     .flow-label {
-      color: rgba(255,255,255,0.88);
+      color: rgba(255,255,255,0.92);
       font-size: 12px;
       font-weight: 600;
       white-space: nowrap;
     }
-    .flow-arrow { color: var(--gold); font-size: 18px; margin-top: 6px; }
+    .flow-arrow { color: rgba(201,162,23,0.7); font-size: 13px; flex-shrink: 0; }
 
     /* Main */
     main {
@@ -810,11 +820,10 @@
       .hero-info { flex-direction: column; }
       .hero-info-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
       .hero-info-item:last-child { border-bottom: none; }
-      .flow-bar { flex-direction: column; align-items: flex-start; gap: 4px; }
-      .flow-step { flex-direction: row; gap: 10px; align-items: center; }
-      .flow-label { font-size: 13px; white-space: normal; }
-      .flow-num { width: 30px; height: 30px; font-size: 13px; flex-shrink: 0; }
-      .flow-arrow { margin-top: 0; padding-left: 10px; }
+      .flow-step { padding: 5px 11px 5px 5px; gap: 6px; }
+      .flow-num { width: 22px; height: 22px; font-size: 11px; }
+      .flow-label { font-size: 11px; }
+      .flow-arrow { font-size: 11px; }
 
       main { padding: 16px 12px 48px; }
 
