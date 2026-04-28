@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CapCut PC版 操作マニュアル | isla × Connect</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Inter:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --navy: #0A2870;
+      --navy-mid: #0D3290;
+      --gold: #C9A217;
+      --gold-light: #F0D060;
+      --bg: #F2F5FF;
+      --card: #ffffff;
+      --text: #0F1B2D;
+      --muted: #4A6582;
+      --border: #D0DEF5;
+      --red: #e53935;
+      --sidebar-w: 256px;
+    }
+
+    body {
+      font-family: 'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Meiryo', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.7;
+    }
+
+    /* ===== LAYOUT ===== */
+    .layout {
+      display: flex;
+      min-height: 100vh;
+    }
+
+    /* ===== SIDEBAR ===== */
+    .sidebar {
+      width: var(--sidebar-w);
+      background: linear-gradient(180deg, #030E2E 0%, #061840 50%, #0A2870 100%);
+      position: fixed;
+      top: 0; left: 0;
+      height: 100vh;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      z-index: 100;
+      scrollbar-width: thin;
+      scrollbar-color: rgba(255,255,255,0.1) transparent;
+    }
+    .sidebar::-webkit-scrollbar { width: 4px; }
+    .sidebar::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 2px; }
+
+    .sidebar-brand {
+      padding: 6px 16px 10px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      flex-shrink: 0;
+    }
+    .sidebar-logo {
+      width: 170px;
+      max-width: 100%;
+      filter: invert(1) brightness(1.8);
+      opacity: 0.9;
+      margin-bottom: 6px;
+      display: block;
+    }
+    .sidebar-subtitle {
+      font-size: 10px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.08em;
+      line-height: 1.6;
+    }
+    .sidebar-subtitle strong {
+      display: block;
+      font-size: 13px;
+      color: rgba(255,255,255,0.85);
+      font-weight: 700;
+      margin-bottom: 2px;
+    }
+
+    /* Tab buttons */
+    .tab-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 5px;
+      padding: 16px 14px 10px;
+    }
+    .tab-btn {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.6);
+      padding: 10px 4px 8px;
+      border-radius: 12px;
+      font-size: 11.5px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Noto Sans JP', sans-serif;
+      letter-spacing: 0.03em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 3px;
+      line-height: 1.3;
+    }
+    .tab-btn:hover {
+      background: rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.9);
+      transform: translateY(-1px);
+    }
+    .tab-btn.active {
+      background: var(--gold);
+      border-color: var(--gold);
+      color: #0F1B2D;
+      box-shadow: 0 4px 12px rgba(201,162,23,0.45);
+    }
+
+    /* Nav groups */
+    .sidebar-nav { padding: 4px 12px 32px; flex: 1; }
+    .nav-group { display: none; }
+    .nav-group.active { display: block; }
+    .nav-phase-label {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.14em;
+      padding: 14px 8px 6px;
+      text-transform: uppercase;
+      opacity: 0.8;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding: 8px 10px;
+      border-radius: 9px;
+      text-decoration: none;
+      color: rgba(255,255,255,0.58);
+      font-size: 12.5px;
+      transition: all 0.18s;
+      margin-bottom: 2px;
+      line-height: 1.4;
+    }
+    .nav-item:hover {
+      background: rgba(255,255,255,0.07);
+      color: rgba(255,255,255,0.9);
+    }
+    .nav-item.active {
+      background: rgba(201,162,23,0.14);
+      color: var(--gold-light);
+    }
+    .nav-num {
+      width: 22px; height: 22px;
+      background: rgba(255,255,255,0.09);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 10px;
+      font-weight: 700;
+      font-family: 'Inter', sans-serif;
+      flex-shrink: 0;
+      color: rgba(255,255,255,0.65);
+    }
+    .nav-item.active .nav-num {
+      background: var(--gold);
+      color: var(--navy);
+    }
+
+    /* ===== CONTENT ===== */
+    .content {
+      margin-left: var(--sidebar-w);
+      flex: 1;
+      transition: margin-left 0.28s cubic-bezier(.4,0,.2,1);
+    }
+    .sidebar-collapsed .content {
+      margin-left: 0;
+    }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(135deg, #030E2E 0%, #061840 55%, #0A2870 100%);
+      color: white;
+      padding: 52px 52px 48px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -80px; right: -80px;
+      width: 340px; height: 340px;
+      border: 1.5px solid rgba(201,162,23,0.18);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: -40px; right: -40px;
+      width: 200px; height: 200px;
+      border: 1.5px solid rgba(201,162,23,0.12);
+      border-radius: 50%;
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(201,162,23,0.15);
+      border: 1px solid rgba(201,162,23,0.32);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 11.5px;
+      color: var(--gold-light);
+      margin-bottom: 18px;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+    }
+    .hero h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .hero-sub {
+      font-size: 14px;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 30px;
+    }
+    .hero-info {
+      display: flex;
+      gap: 0;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    .hero-info-item {
+      flex: 1;
+      padding: 18px 22px;
+      border-right: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero-info-item:last-child { border-right: none; }
+    .hero-info-label {
+      font-size: 10px;
+      color: var(--gold);
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+    .hero-info-value {
+      font-size: 13.5px;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.5;
+    }
+    .pro-badge {
+      display: inline-block;
+      background: linear-gradient(135deg, #c9a217, #f0d060);
+      color: #0d1f3c;
+      font-size: 10px;
+      font-weight: 800;
+      font-family: 'Inter', sans-serif;
+      padding: 2px 7px;
+      border-radius: 5px;
+      margin-left: 5px;
+      vertical-align: middle;
+      letter-spacing: 0.05em;
+    }
+    .flow-bar {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 26px;
+    }
+    .flow-step {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.13);
+      color: rgba(255,255,255,0.82);
+      border-radius: 9px;
+      padding: 7px 13px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .flow-arrow { color: var(--gold); font-size: 15px; }
+
+    /* Main */
+    main {
+      padding: 36px 52px 64px;
+    }
+
+    /* Tab sections */
+    .tab-section { display: none; }
+    .tab-section.active { display: block; }
+
+    /* Section heading (inside tab) */
+    .section-heading {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin: 0 0 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .section-heading::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: linear-gradient(90deg, rgba(201,162,23,0.3), transparent);
+    }
+
+    /* Step card */
+    .step-card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 36px;
+      margin-bottom: 22px;
+      box-shadow: 0 2px 20px rgba(13,31,60,0.07);
+      border-left: 4px solid var(--gold);
+      scroll-margin-top: 24px;
+    }
+
+    .step-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 26px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step-number {
+      background: linear-gradient(135deg, #C9A217, #E0C040);
+      color: #0F1B2D;
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+      position: relative;
+    }
+    .step-number::after {
+      content: '';
+      position: absolute;
+      bottom: 0; right: 0;
+      width: 14px; height: 14px;
+      background: var(--gold);
+      border-radius: 14px 0 14px 0;
+    }
+    .step-number span { font-size: 20px; font-weight: 800; }
+
+    .step-title { font-size: 21px; font-weight: 700; }
+    .step-subtitle { font-size: 13px; color: var(--muted); margin-top: 3px; }
+
+    /* Step rows */
+    .step-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      margin: 20px 0 8px;
+      font-size: 15px;
+    }
+    .step-num-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--navy);
+      color: white;
+      width: 26px; height: 26px;
+      border-radius: 50%;
+      font-size: 13px;
+      font-weight: 700;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Images */
+    .img-wrap { position: relative; margin: 12px 0 4px; }
+    .img-wrap img {
+      width: 100%;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: block;
+    }
+    .img-cap { font-size: 12px; color: #aaa; text-align: center; margin-bottom: 16px; }
+    .img-marker {
+      position: absolute;
+      background: rgba(233,69,96,0.88);
+      color: white;
+      font-size: clamp(8px, 1.1vw, 12px);
+      font-weight: 700;
+      padding: clamp(2px, 0.4vw, 5px) clamp(6px, 1vw, 13px);
+      border-radius: 20px;
+      white-space: nowrap;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.25);
+      pointer-events: none;
+      backdrop-filter: blur(2px);
+    }
+
+    /* Screenshot placeholder */
+    .screenshot-area {
+      border: 2px dashed #c8d0e8;
+      border-radius: 12px;
+      background: #f8f9fc;
+      padding: 32px;
+      text-align: center;
+      margin: 20px 0;
+      color: #aab;
+    }
+    .screenshot-area .icon { font-size: 32px; margin-bottom: 8px; }
+    .screenshot-area p { font-size: 13px; }
+    .screenshot-area strong { display: block; font-size: 15px; color: #889; margin-bottom: 4px; }
+
+    /* Checklist */
+    .checklist { list-style: none; margin: 16px 0; }
+    .checklist li {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid #f5f5f5;
+      font-size: 15px;
+    }
+    .checklist li:last-child { border-bottom: none; }
+    .checklist li::before {
+      content: '';
+      width: 20px; height: 20px;
+      border: 2px solid #d0d5e8;
+      border-radius: 5px;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+
+    /* Tables */
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    th { background: var(--navy); color: white; padding: 12px 16px; text-align: left; font-weight: 600; }
+    th:first-child { border-radius: 8px 0 0 0; }
+    th:last-child { border-radius: 0 8px 0 0; }
+    td { padding: 11px 16px; border-bottom: 1px solid #f0f0f0; }
+    tr:nth-child(even) td { background: #f8f9fc; }
+    tr:last-child td:first-child { border-radius: 0 0 0 8px; }
+    tr:last-child td:last-child { border-radius: 0 0 8px 0; }
+
+    /* Tip box */
+    .tip-box {
+      background: #fffbea;
+      border: 1px solid #ffe082;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 14px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .tip-box .tip-icon { font-size: 18px; flex-shrink: 0; }
+
+    /* Warn box */
+    .warn-box {
+      background: #fff3f3;
+      border: 1px solid #ffb3b3;
+      border-radius: 12px;
+      padding: 14px 18px;
+      margin: 16px 0;
+      font-size: 14px;
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+
+    /* Practice box */
+    .practice-box {
+      background: linear-gradient(135deg, #e8f4fd, #f0e8ff);
+      border-left: 4px solid var(--navy);
+      border-radius: 0 12px 12px 0;
+      padding: 18px 22px;
+      margin: 20px 0;
+    }
+    .practice-box .label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+    .practice-box p { font-size: 14px; }
+
+    /* Section label */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.12em;
+      margin: 24px 0 10px;
+      text-transform: uppercase;
+    }
+
+    /* Shortcut grid */
+    .shortcut-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin: 16px 0; }
+    .shortcut-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: #f8f9fc;
+      padding: 12px 16px;
+      border-radius: 10px;
+      font-size: 14px;
+    }
+    kbd {
+      background: var(--navy);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 12px;
+      font-family: monospace;
+    }
+
+    /* Volume meter */
+    .volume-meter { display: flex; align-items: center; gap: 12px; margin: 8px 0; }
+    .volume-bar { flex: 1; height: 8px; background: #e0e0e0; border-radius: 4px; overflow: hidden; }
+    .volume-fill {
+      height: 100%;
+      border-radius: 4px;
+      background: linear-gradient(90deg, var(--navy), var(--gold));
+    }
+
+    /* Type badges */
+    .type-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-right: 6px; }
+    .badge-interview { background: #e3f2fd; color: #1565c0; }
+    .badge-event { background: #fce4ec; color: #c62828; }
+    .badge-vlog { background: #e8f5e9; color: #2e7d32; }
+    .badge-volunteer { background: #fff8e1; color: #f57f17; }
+
+    /* Two col */
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 16px 0; }
+
+    /* SOS card */
+    .sos-card {
+      background: var(--card);
+      border-radius: 18px;
+      padding: 36px;
+      margin-bottom: 22px;
+      box-shadow: 0 2px 20px rgba(13,31,60,0.07);
+      border-left: 4px solid var(--red);
+      scroll-margin-top: 24px;
+    }
+    .sos-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 26px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--border);
+    }
+    .sos-badge {
+      background: linear-gradient(135deg, #c62828, #e53935);
+      color: white;
+      width: 56px; height: 56px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    /* Final check */
+    .final-check {
+      background: var(--navy);
+      color: white;
+      border-radius: 18px;
+      padding: 36px;
+      margin-bottom: 22px;
+    }
+    .final-check h2 { font-size: 18px; margin-bottom: 20px; }
+    .final-check li {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 0;
+      font-size: 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .final-check li::before {
+      content: '';
+      width: 18px; height: 18px;
+      border: 2px solid rgba(255,255,255,0.35);
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+
+    /* ===== MASCOT CHARACTER ===== */
+    .chara-box {
+      display: flex;
+      align-items: flex-end;
+      gap: 14px;
+      margin: 24px 0;
+    }
+    .chara-box.right {
+      flex-direction: row-reverse;
+    }
+    .chara-img {
+      width: 96px;
+      height: 96px;
+      object-fit: contain;
+      flex-shrink: 0;
+      filter: drop-shadow(0 4px 12px rgba(10,40,112,0.3));
+      animation: chara-float 3s ease-in-out infinite;
+    }
+    @keyframes chara-float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-5px); }
+    }
+    .chara-bubble {
+      position: relative;
+      background: linear-gradient(135deg, #0A2870, #0D3290);
+      color: white;
+      border-radius: 16px 16px 16px 4px;
+      padding: 14px 18px;
+      font-size: 14px;
+      line-height: 1.65;
+      max-width: 480px;
+      box-shadow: 0 4px 18px rgba(10,40,112,0.18);
+      border: 1px solid rgba(201,162,23,0.3);
+    }
+    .chara-box.right .chara-bubble {
+      border-radius: 16px 16px 4px 16px;
+    }
+    .chara-bubble::before {
+      content: '';
+      position: absolute;
+      bottom: 10px; left: -10px;
+      border: 6px solid transparent;
+      border-right-color: #0A2870;
+    }
+    .chara-box.right .chara-bubble::before {
+      left: auto; right: -10px;
+      border-right-color: transparent;
+      border-left-color: #0A2870;
+    }
+    .chara-bubble strong { color: var(--gold-light); }
+    .chara-name {
+      font-size: 10px;
+      font-weight: 700;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      margin-bottom: 5px;
+      display: block;
+    }
+
+    /* Footer */
+    footer {
+      padding: 28px 52px;
+      color: #aaa;
+      font-size: 12px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    h3 { font-size: 16px; margin: 20px 0 10px; color: var(--navy); }
+    p { font-size: 14px; margin: 8px 0; }
+    ul { padding-left: 20px; font-size: 14px; }
+    li { margin: 6px 0; }
+
+    /* ===== HAMBURGER BUTTON ===== */
+    .hamburger {
+      display: flex;
+      position: fixed;
+      top: 12px; left: 12px;
+      z-index: 201;
+      background: #030E2E;
+      border: none;
+      border-radius: 10px;
+      width: 42px; height: 42px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      cursor: pointer;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.35);
+      transition: background 0.2s;
+    }
+    .hamburger span {
+      display: block;
+      width: 20px; height: 2px;
+      background: white;
+      border-radius: 2px;
+      transition: all 0.25s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+    /* Overlay */
+    .sidebar-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.45);
+      z-index: 99;
+    }
+    .sidebar-overlay.show { display: block; }
+
+    /* ===== RESPONSIVE ===== */
+
+    /* PC: サイドバーはtransitionだけ追加 */
+    .sidebar {
+      transition: transform 0.28s cubic-bezier(.4,0,.2,1);
+    }
+    .sidebar-collapsed .sidebar {
+      transform: translateX(-100%);
+    }
+
+    /* PC半画面〜タブレット */
+    @media (max-width: 1100px) {
+      .hero { padding: 52px 36px 40px; }
+      main { padding: 28px 36px 56px; }
+    }
+
+    /* スマホ */
+    @media (max-width: 768px) {
+      :root { --sidebar-w: 240px; }
+
+      /* スマホは最初から閉じた状態 */
+      .sidebar { transform: translateX(-100%); }
+      .sidebar.open { transform: translateX(0); }
+      .sidebar-collapsed .sidebar { transform: translateX(-100%); }
+
+      .content { margin-left: 0 !important; }
+
+      .hero { padding: 56px 16px 28px; }
+      .hero h1 { font-size: 19px; }
+      .hero-sub { font-size: 13px; }
+      .hero-info { flex-direction: column; }
+      .hero-info-item { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .hero-info-item:last-child { border-bottom: none; }
+      .flow-bar { gap: 3px; }
+      .flow-step { font-size: 10px; padding: 4px 8px; }
+      .flow-arrow { font-size: 11px; }
+
+      main { padding: 16px 12px 48px; }
+
+      .step-card { padding: 16px 12px; }
+      .step-header { gap: 10px; }
+      .step-number { width: 42px; height: 42px; }
+      .step-number span { font-size: 15px; }
+      .step-title { font-size: 16px; }
+
+      .shortcut-grid { grid-template-columns: 1fr; }
+      .two-col { grid-template-columns: 1fr; }
+
+      .chara-box { flex-direction: column; align-items: flex-start; }
+      .chara-box.right { flex-direction: column; align-items: flex-end; }
+      .chara-bubble { max-width: 100%; font-size: 13px; }
+      .chara-bubble::before { display: none; }
+      .chara-box.right .chara-bubble::before { display: none; }
+
+      footer { flex-direction: column; gap: 4px; text-align: center; padding: 16px 12px; }
+
+      table { font-size: 11px; }
+      th, td { padding: 6px 8px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Hamburger button -->
+<button class="hamburger" id="hamburger" aria-label="メニュー">
+  <span></span><span></span><span></span>
+</button>
+
+<!-- Overlay -->
+<div class="sidebar-overlay" id="overlay"></div>
+
+<div class="layout">
+
+  <!-- ===== SIDEBAR ===== -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <img src="images/connect-logo.png" alt="Connect" class="sidebar-logo">
+      <div class="sidebar-subtitle">
+        <strong>CapCut PC版 操作マニュアル</strong>
+        isla 広報チーム · Kindai University
+      </div>
+    </div>
+
+    <div class="tab-buttons">
+      <button class="tab-btn active" data-tab="prep">🎯 準備</button>
+      <button class="tab-btn" data-tab="edit">🎬 編集</button>
+      <button class="tab-btn" data-tab="finish">✨ 仕上げ</button>
+      <button class="tab-btn" data-tab="sos">💡 ヘルプ</button>
+    </div>
+
+    <nav class="sidebar-nav">
+      <!-- 準備 group -->
+      <div class="nav-group active" data-tab="prep">
+        <div class="nav-phase-label">準備フェーズ</div>
+        <a href="#step1" class="nav-item active">
+          <span class="nav-num">1</span>インストール・起動
+        </a>
+        <a href="#step2" class="nav-item">
+          <span class="nav-num">2</span>プロジェクト作成
+        </a>
+        <a href="#step3" class="nav-item">
+          <span class="nav-num">3</span>素材の準備 &amp; 読み込み
+        </a>
+        <a href="#step4" class="nav-item">
+          <span class="nav-num">4</span>画面の見方
+        </a>
+      </div>
+
+      <!-- 編集 group -->
+      <div class="nav-group" data-tab="edit">
+        <div class="nav-phase-label">編集フェーズ</div>
+        <a href="#step5" class="nav-item">
+          <span class="nav-num">5</span>カット編集
+        </a>
+        <a href="#step6" class="nav-item">
+          <span class="nav-num">6</span>テロップを入れる
+        </a>
+        <a href="#step7" class="nav-item">
+          <span class="nav-num">7</span>BGM・効果音
+        </a>
+        <a href="#step8" class="nav-item">
+          <span class="nav-num">8</span>トランジション
+        </a>
+      </div>
+
+      <!-- 仕上げ group -->
+      <div class="nav-group" data-tab="finish">
+        <div class="nav-phase-label">仕上げフェーズ</div>
+        <a href="#step9" class="nav-item">
+          <span class="nav-num">9</span>書き出し
+        </a>
+        <a href="#step10" class="nav-item">
+          <span class="nav-num">10</span>SNSプレビュー
+        </a>
+        <a href="#step11" class="nav-item">
+          <span class="nav-num">11</span>自動キャプション
+        </a>
+        <a href="#step12" class="nav-item">
+          <span class="nav-num">12</span>タイムライン拡大
+        </a>
+        <a href="#step13" class="nav-item">
+          <span class="nav-num">13</span>ロゴを入れる
+        </a>
+      </div>
+
+      <!-- SOS group -->
+      <div class="nav-group" data-tab="sos">
+        <div class="nav-phase-label">ヘルプ &amp; FAQ</div>
+        <a href="#feedback" class="nav-item">
+          <span class="nav-num">💬</span>よくある修正依頼
+        </a>
+        <a href="#sos" class="nav-item">
+          <span class="nav-num">!</span>困ったときは
+        </a>
+        <a href="#final" class="nav-item">
+          <span class="nav-num">✓</span>最終チェック
+        </a>
+      </div>
+    </nav>
+  </aside>
+
+  <!-- ===== CONTENT ===== -->
+  <div class="content">
+
+    <!-- Hero -->
+    <div class="hero">
+      <!-- Decorative world map outline (top-right) -->
+      <img src="images/world-map.png" alt=""
+           style="position:absolute;top:-10px;right:-20px;width:520px;height:auto;opacity:0.08;pointer-events:none;filter:invert(1) brightness(2);mix-blend-mode:screen;">
+
+      <div class="hero-badge">isla 広報チーム 内部資料 · Connect Kindai University</div>
+      <h1>CapCut PC版 操作マニュアル</h1>
+      <p class="hero-sub">初めてでも作れる！isla動画編集ガイド</p>
+
+      <div class="hero-info">
+        <div class="hero-info-item">
+          <div class="hero-info-label">使用ツール</div>
+          <div class="hero-info-value">
+            CapCut PC版<span class="pro-badge">PRO</span>
+          </div>
+        </div>
+        <div class="hero-info-item">
+          <div class="hero-info-label">動画フォーマット</div>
+          <div class="hero-info-value">縦型ショート動画 9:16（15秒から）</div>
+        </div>
+        <div class="hero-info-item">
+          <div class="hero-info-label">対象</div>
+          <div class="hero-info-value">isla メンバー・動画編集初心者</div>
+        </div>
+      </div>
+
+      <div class="flow-bar">
+        <div class="flow-step">① 素材を読み込む</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">② カット編集</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">③ テキスト追加</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">④ 効果音追加</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-step">⑤ 書き出し</div>
+      </div>
+    </div>
+
+    <main>
+
+      <!-- ===== TAB: 準備 ===== -->
+      <div class="tab-section active" data-tab="prep">
+        <div class="section-heading">準備フェーズ — STEP 01 〜 04</div>
+
+        <div class="chara-box">
+          <img src="images/mascot-1-standard.png" alt="キャラクター" class="chara-img">
+          <div class="chara-bubble">
+            <span class="chara-name">🎓 コネマグ — isla × Connect</span>
+            はじめまして！isla広報チームの動画編集をサポートするよ。<br>
+            まず<strong>CapCutのインストール</strong>からはじめよう！難しくないから安心してね👍
+          </div>
+        </div>
+
+        <!-- STEP 1 -->
+        <div class="step-card" id="step1">
+          <div class="step-header">
+            <div class="step-number">STEP<span>1</span></div>
+            <div>
+              <div class="step-title">インストール・起動</div>
+              <div class="step-subtitle">まずはCapCutをPCに入れよう</div>
+            </div>
+          </div>
+
+          <ul class="checklist">
+            <li>ブラウザで <strong>「CapCut PC」</strong> と検索</li>
+            <li>公式サイト（capcut.com）からダウンロード</li>
+            <li>インストーラーを起動してインストール</li>
+            <li>Googleアカウントなどでログイン</li>
+          </ul>
+
+          <div class="img-wrap">
+            <img src="images/capcut-home-screen.png" alt="CapCutホーム画面">
+            <div class="img-marker" style="top:9%; left:14%;">左上にProバッジ</div>
+            <div class="img-marker" style="top:7%; left:38%;">プロジェクトを作成</div>
+          </div>
+          <p class="img-cap">【スクショ：CapCutを起動したときのホーム画面】</p>
+
+          <div class="tip-box">
+            <div class="tip-icon">💡</div>
+            <div>islaはCapCut <strong>Pro版</strong>を使用しています。ログイン後にProプランが有効になっているか確認してください。</div>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="step-card" id="step2">
+          <div class="step-header">
+            <div class="step-number">STEP<span>2</span></div>
+            <div>
+              <div class="step-title">新規プロジェクトの作成</div>
+              <div class="step-subtitle">動画のサイズ（比率）を最初に決める</div>
+            </div>
+          </div>
+
+          <ul class="checklist">
+            <li>CapCutを起動</li>
+            <li>左上の <strong>「新しいプロジェクト」</strong> をクリック</li>
+            <li>用途に合った画面比率を選ぶ</li>
+          </ul>
+
+          <div class="img-wrap">
+            <img src="images/capcut-new-project.png" alt="新規プロジェクト作成画面">
+            <div class="img-marker" style="top:8%; left:14%;">左メニューから操作</div>
+            <div class="img-marker" style="top:35%; left:38%;">インポートボタン</div>
+            <div class="img-marker" style="top:8%; right:4%;">プロジェクト情報</div>
+          </div>
+          <p class="img-cap">【スクショ：新規プロジェクト作成後の画面】</p>
+
+          <div class="section-label">どの比率を選ぶ？</div>
+          <table>
+            <tr><th>比率</th><th>用途</th><th>islaでの使用場面</th></tr>
+            <tr><td><strong>9:16（縦）</strong></td><td>リール・TikTok・ストーリーズ</td><td>イベント告知・ボランティア募集</td></tr>
+            <tr><td><strong>16:9（横）</strong></td><td>YouTube・スクリーン投影</td><td>インタビュー動画・説明動画</td></tr>
+            <tr><td><strong>1:1（正方形）</strong></td><td>Instagramフィード</td><td>活動報告・写真まとめ</td></tr>
+          </table>
+
+          <div class="practice-box">
+            <div class="label">🎯 実際にやってみよう</div>
+            <p>今回は <strong>9:16（縦型）</strong> でイベント告知動画を作る想定で進めます。「9:16」を選んでプロジェクトを作成してください。</p>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="step-card" id="step3">
+          <div class="step-header">
+            <div class="step-number">STEP<span>3</span></div>
+            <div>
+              <div class="step-title">素材の準備 &amp; 読み込み</div>
+              <div class="step-subtitle">Googleドライブからダウンロードしてタイムラインへ</div>
+            </div>
+          </div>
+
+          <div class="section-label">① Googleドライブから動画をダウンロード</div>
+
+          <div class="step-row">
+            <span class="step-num-badge">1</span>
+            <span>ブラウザでGoogleドライブを開き、<strong>「共有ドライブ」→「GEC広報部2026」</strong>→ 対象フォルダへ移動する</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/gdrive-01-folder.png" alt="Googleドライブ フォルダ画面">
+            <div class="img-marker" style="top:30%; left:2%;">共有ドライブ</div>
+          </div>
+          <p class="img-cap">【スクショ：Googleドライブ フォルダ一覧の画面】</p>
+
+          <div class="step-row">
+            <span class="step-num-badge">2</span>
+            <span>動画ファイルをクリックしてプレビューを開く → 右上の<strong>ダウンロードボタン（↓）</strong>をクリック</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/gdrive-02-download.png" alt="Googleドライブ ダウンロード">
+            <div class="img-marker" style="top:10%; right:5%;">ここをクリック</div>
+          </div>
+          <p class="img-cap">【スクショ：ダウンロードボタンの画面】</p>
+
+          <div class="tip-box">
+            <div class="tip-icon">💡</div>
+            <div>ダウンロードしたファイルはPCの<strong>「ダウンロード」フォルダ</strong>に保存されます。</div>
+          </div>
+
+          <div class="section-label">② CapCutへインポート</div>
+
+          <div class="step-row">
+            <span class="step-num-badge">3</span>
+            <span>CapCutを起動 → 左上の<strong>「インポート」</strong>をクリック → ファイル選択画面で<strong>「ダウンロード」</strong>フォルダを選択 → ファイルをクリックして<strong>「開く」</strong></span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-01-import.png" alt="CapCut インポート画面">
+            <div class="img-marker" style="top:43%; left:13%;">① ダウンロード</div>
+            <div class="img-marker" style="top:34%; left:38%;">② ファイルを選択</div>
+            <div class="img-marker" style="bottom:7%; right:10%;">③ 開く</div>
+          </div>
+          <p class="img-cap">【スクショ：CapCut インポートのファイル選択画面】</p>
+
+          <div class="step-row">
+            <span class="step-num-badge">4</span>
+            <span>左パネルに動画のサムネイルが表示されたら<strong>読み込み完了</strong></span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-02-media.png" alt="CapCut メディアパネル">
+            <div class="img-marker" style="top:18%; left:8%;">動画が表示された</div>
+          </div>
+          <p class="img-cap">【スクショ：メディアパネルに動画が表示された画面】</p>
+
+          <div class="step-row">
+            <span class="step-num-badge">5</span>
+            <span>動画サムネイルを<strong>タイムラインにドラッグ＆ドロップ</strong></span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-03-timeline.png" alt="タイムライン">
+            <div class="img-marker" style="top:75%; left:25%;">タイムラインに並んだ</div>
+          </div>
+          <p class="img-cap">【スクショ：タイムラインに動画が追加された画面】</p>
+
+          <div class="tip-box">
+            <div class="tip-icon">💡</div>
+            <div>複数ファイルを選ぶときは <kbd>Ctrl</kbd> を押しながらクリック。タイムラインにドラッグする順番が動画の再生順になります。</div>
+          </div>
+
+          <div class="practice-box">
+            <div class="label">🎯 実際にやってみよう</div>
+            <p>Googleドライブの「GEC広報部2026」フォルダからイベント動画を1つダウンロードして、CapCutのタイムラインに追加してみましょう。</p>
+          </div>
+        </div>
+
+        <!-- STEP 4 -->
+        <div class="step-card" id="step4">
+          <div class="step-header">
+            <div class="step-number">STEP<span>4</span></div>
+            <div>
+              <div class="step-title">画面の見方</div>
+              <div class="step-subtitle">各エリアの役割を覚えよう</div>
+            </div>
+          </div>
+
+          <div class="img-wrap">
+            <img src="images/capcut-screen-overview.png" alt="CapCut画面全体">
+            <div class="img-marker" style="top:10%; left:2%;">① 左パネル（素材・テキスト）</div>
+            <div class="img-marker" style="top:8%; left:38%;">② プレビュー画面</div>
+            <div class="img-marker" style="top:8%; right:2%;">③ 右パネル（設定）</div>
+            <div class="img-marker" style="bottom:20%; left:10%;">④ タイムライン</div>
+          </div>
+          <p class="img-cap">【スクショ：CapCut編集画面の全体】</p>
+
+          <table>
+            <tr><th>エリア</th><th>役割</th></tr>
+            <tr><td>🗂️ <strong>左パネル</strong></td><td>素材・テキスト・BGM・エフェクトを選ぶ場所</td></tr>
+            <tr><td>▶️ <strong>プレビュー画面</strong></td><td>今どんな仕上がりか確認する場所</td></tr>
+            <tr><td>🎬 <strong>タイムライン</strong></td><td>動画の順番・長さ・タイミングを調整する場所</td></tr>
+            <tr><td>⚙️ <strong>右パネル</strong></td><td>選択中の素材の細かい設定をする場所</td></tr>
+          </table>
+        </div>
+      </div><!-- /prep -->
+
+      <!-- ===== TAB: 編集 ===== -->
+      <div class="tab-section" data-tab="edit">
+        <div class="section-heading">編集フェーズ — STEP 05 〜 08</div>
+
+        <div class="chara-box right">
+          <img src="images/mascot-5-wink.png" alt="キャラクター" class="chara-img">
+          <div class="chara-bubble">
+            <span class="chara-name">🎓 コネマグ — isla × Connect</span>
+            準備ができたらいよいよ編集開始！<br>
+            <strong>カット編集</strong>が動画クオリティを一番左右するから、ここは丁寧にやろう✂️
+          </div>
+        </div>
+
+        <!-- STEP 5 -->
+        <div class="step-card" id="step5">
+          <div class="step-header">
+            <div class="step-number">STEP<span>5</span></div>
+            <div>
+              <div class="step-title">カット編集</div>
+              <div class="step-subtitle">不要な部分（NG・無言・撮影ミス）を削除する</div>
+            </div>
+          </div>
+
+          <ul class="checklist">
+            <li>タイムライン上のクリップをクリックして選択</li>
+            <li>再生ヘッド（白い縦線）を切りたい場所に移動</li>
+            <li><kbd>Ctrl</kbd> + <kbd>B</kbd> で分割</li>
+            <li>いらない部分をクリックして <kbd>Delete</kbd> で削除</li>
+          </ul>
+
+          <div class="step-row">
+            <span class="step-num-badge">1</span>
+            <span>タイムラインのクリップをクリックして選択する（クリップが青くなればOK）</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-cut-01-before.png" alt="編集前のタイムライン">
+            <div class="img-marker" style="bottom:28%; left:20%;">クリップを選択</div>
+          </div>
+          <p class="img-cap">【スクショ：クリップを選択した状態】</p>
+
+          <div class="step-row">
+            <span class="step-num-badge">2</span>
+            <span>再生ヘッド（白い縦線）をカットしたい場所に移動 → <kbd>Ctrl</kbd>+<kbd>B</kbd> で分割</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-cut-02-split.png" alt="分割後のタイムライン">
+            <div class="img-marker" style="bottom:28%; left:10%;">分割された</div>
+          </div>
+          <p class="img-cap">【スクショ：Ctrl+Bで分割された状態】</p>
+
+          <div class="step-row">
+            <span class="step-num-badge">3</span>
+            <span>いらない部分をクリックして選択 → <kbd>Delete</kbd> で削除</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-cut-03-after.png" alt="削除後のタイムライン">
+            <div class="img-marker" style="bottom:28%; left:10%;">削除完了</div>
+          </div>
+          <p class="img-cap">【スクショ：削除後のタイムライン】</p>
+
+          <div class="section-label">ツールバーでもカット操作ができる</div>
+
+          <div class="img-wrap">
+            <img src="images/capcut-toolbar.png" alt="タイムラインツールバー" style="max-width:320px;margin:0 auto;display:block;">
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:12px 0 20px;font-size:13px;text-align:center;">
+            <div style="background:#f0f4ff;border-radius:10px;padding:10px 6px;">
+              <div style="font-size:20px;margin-bottom:4px;">↩</div>
+              <div style="font-weight:700;">元に戻す</div>
+              <div style="color:#888;font-size:11px;margin-top:2px;">Ctrl+Z</div>
+            </div>
+            <div style="background:#f0f4ff;border-radius:10px;padding:10px 6px;">
+              <div style="font-size:20px;margin-bottom:4px;">↪</div>
+              <div style="font-weight:700;">やり直す</div>
+              <div style="color:#888;font-size:11px;margin-top:2px;">Ctrl+Y</div>
+            </div>
+            <div style="background:#f0f4ff;border-radius:10px;padding:10px 6px;">
+              <div style="font-size:20px;margin-bottom:4px;">⊣⊢</div>
+              <div style="font-weight:700;">分割</div>
+              <div style="color:#888;font-size:11px;margin-top:2px;">Ctrl+B</div>
+            </div>
+            <div style="background:#f0f4ff;border-radius:10px;padding:10px 6px;">
+              <div style="font-size:20px;margin-bottom:4px;">🗑</div>
+              <div style="font-weight:700;">削除</div>
+              <div style="color:#888;font-size:11px;margin-top:2px;">Delete</div>
+            </div>
+          </div>
+
+          <div class="section-label">キーボードショートカット一覧</div>
+          <div class="tip-box" style="margin-bottom:12px;">
+            <div class="tip-icon">💡</div>
+            <div>右上のキーボードアイコンからショートカット一覧をいつでも確認できるよ！</div>
+          </div>
+          <div class="shortcut-grid">
+            <div class="shortcut-item"><span>分割</span><kbd>Ctrl + B</kbd></div>
+            <div class="shortcut-item"><span>全クリップ一括分割</span><kbd>Ctrl + Shift + B</kbd></div>
+            <div class="shortcut-item"><span>イン点（開始）をマーク</span><kbd>I</kbd></div>
+            <div class="shortcut-item"><span>アウト点（終了）をマーク</span><kbd>O</kbd></div>
+            <div class="shortcut-item"><span>イン点より左を削除</span><kbd>Q</kbd></div>
+            <div class="shortcut-item"><span>アウト点より右を削除</span><kbd>W</kbd></div>
+            <div class="shortcut-item"><span>素材を有効 / 無効</span><kbd>V</kbd></div>
+            <div class="shortcut-item"><span>元に戻す</span><kbd>Ctrl + Z</kbd></div>
+            <div class="shortcut-item"><span>再生・停止</span><kbd>スペース</kbd></div>
+            <div class="shortcut-item"><span>1フレーム移動</span><kbd>← / →</kbd></div>
+          </div>
+
+          <div class="practice-box">
+            <div class="label">🎯 実際にやってみよう（インタビュー動画の場合）</div>
+            <p>① 動画を再生して「あー」「えーと」などの余分な部分を探す<br>
+            ② その前後で <kbd>Ctrl+B</kbd> で分割<br>
+            ③ 余分な部分を <kbd>Delete</kbd> で削除<br><br>
+            ✨ コツ：完璧にやろうとせず、まず大きく不要な部分を削るところから始めよう</p>
+          </div>
+        </div>
+
+        <!-- STEP 6 -->
+        <div class="step-card" id="step6">
+          <div class="step-header">
+            <div class="step-number">STEP<span>6</span></div>
+            <div>
+              <div class="step-title">テロップ（文字）を入れる</div>
+              <div class="step-subtitle">字幕・タイトル・説明文を追加する</div>
+            </div>
+          </div>
+
+          <div class="step-row">
+            <span class="step-num-badge">1</span>
+            <span>左パネルの<strong>「テキスト」</strong>をクリック → <strong>「デフォルトテキスト」</strong>をタイムラインにドラッグ</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-text-01-panel.png" alt="テキストパネル">
+            <div class="img-marker" style="top:12%; left:2%;">① テキストをクリック</div>
+            <div class="img-marker" style="top:18%; left:18%;">② ここをドラッグ</div>
+          </div>
+          <p class="img-cap">【スクショ：テキストタブとデフォルトテキスト】</p>
+
+          <div class="step-row">
+            <span class="step-num-badge">2</span>
+            <span>タイムラインのテキストクリップをクリック → 右パネルで<strong>フォント・サイズ・色</strong>を設定する</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-text-02-style.png" alt="テキストスタイル設定">
+            <div class="img-marker" style="top:22%; right:5%;">フォントを選ぶ</div>
+            <div class="img-marker" style="top:30%; right:5%;">サイズを変える</div>
+            <div class="img-marker" style="top:42%; right:5%;">色を変える</div>
+          </div>
+          <p class="img-cap">【スクショ：右パネルのテキスト設定】</p>
+
+          <div class="tip-box">
+            <div class="tip-icon">💡</div>
+            <div><strong>islaの字幕設定の目安：</strong>フォントは太めのものを選ぶ・サイズは動画の幅に合わせて調整・<strong>文字全体は白色</strong>に統一する</div>
+          </div>
+
+          <div class="step-row">
+            <span class="step-num-badge">3</span>
+            <span>プレビュー画面のテキストを<strong>ダブルクリック</strong>して文字を入力・位置をドラッグで調整</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-text-03-preview.png" alt="テキストプレビュー">
+            <div class="img-marker" style="top:42%; left:38%;">ダブルクリックで編集</div>
+          </div>
+          <p class="img-cap">【スクショ：プレビューにテキストが表示された状態】</p>
+
+          <div class="step-row">
+            <span class="step-num-badge">4</span>
+            <span><strong>キーワードだけ色を変える：</strong>テキストをダブルクリック → 変えたい単語をドラッグで選択 → 右パネルの「色」でカラーピッカーを開いて色を変更</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-text-04-keyword.png" alt="キーワード色変え">
+            <div class="img-marker" style="top:42%; left:30%;">単語を選択</div>
+            <div class="img-marker" style="top:42%; right:5%;">色を変える</div>
+          </div>
+          <p class="img-cap">【スクショ：「韓国ブース」だけ色を変えた状態】</p>
+
+          <div class="tip-box">
+            <div class="tip-icon">💡</div>
+            <div>
+              <strong>islaのキーワード強調ルール：</strong><br>
+              ・文字全体は<strong>白色</strong>に統一する<br>
+              ・料理名・地名などのキーワードだけ <span style="background:#e94560; color:#fff; padding:1px 8px; border-radius:4px; font-weight:700;">赤</span> または <span style="background:#F4C70F; color:#000; padding:1px 8px; border-radius:4px; font-weight:700;">黄色</span> でポイントカラーを入れる<br>
+              ・文字の縁取り（ストローク）は<strong>白または黒</strong>に統一して読みやすくする<br>
+              ・色の種類は増やしすぎない（多くても2色まで）
+            </div>
+          </div>
+
+          <div class="section-label">isla動画でのテロップ例</div>
+
+          <div style="margin: 12px 0;">
+            <span class="type-badge badge-interview">インタビュー動画</span>
+            <div style="background:#f8f9fc; border-radius:10px; padding:14px 16px; margin-top:8px; font-size:14px;">
+              話しているセリフをそのまま文字に起こす<br>
+              <span style="color:#888;">例：「islaに入ったきっかけは国際交流への興味でした」</span><br>
+              → 話者の名前・所属を白テキストで小さく入れると◎
+            </div>
+          </div>
+          <div style="margin: 12px 0;">
+            <span class="type-badge badge-event">イベント告知動画</span>
+            <div style="background:#f8f9fc; border-radius:10px; padding:14px 16px; margin-top:8px; font-size:14px;">
+              日時・場所・内容を順番に表示<br>
+              <span style="color:#888;">例：「📅 2024年〇月〇日（土）」「📍 〇〇大学 〇号館」</span>
+            </div>
+          </div>
+
+          <div class="practice-box">
+            <div class="label">🎯 実際にやってみよう</div>
+            <p>動画の最初に「isla イベント名」というタイトルテロップを入れてみましょう。フォントは太めのものを選ぶと視認性が上がります。</p>
+          </div>
+        </div>
+
+        <!-- STEP 7 -->
+        <div class="step-card" id="step7">
+          <div class="step-header">
+            <div class="step-number">STEP<span>7</span></div>
+            <div>
+              <div class="step-title">BGM・効果音を入れる</div>
+              <div class="step-subtitle">動画の雰囲気を音楽で作る</div>
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <div class="tip-icon">💡</div>
+            <div>islaの動画は<strong>BGMなし・効果音のみ</strong>で構成しています。場面の切り替えや単語のイメージに合わせて効果音を使います。</div>
+          </div>
+
+          <div class="step-row">
+            <span class="step-num-badge">1</span>
+            <span>左パネルの<strong>「オーディオ」</strong>→<strong>「サウンドエフェクト」</strong>をクリック → 検索欄に「ポン」などと入力して効果音を探す</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-sfx-01-search.png" alt="サウンドエフェクト検索">
+            <div class="img-marker" style="top:5%; left:2%;">① サウンドエフェクト</div>
+            <div class="img-marker" style="top:5%; left:30%;">② 「ポン」で検索</div>
+            <div class="img-marker" style="top:15%; right:3%;">③ ＋で追加</div>
+          </div>
+          <p class="img-cap">【スクショ：サウンドエフェクト検索画面】</p>
+
+          <div class="step-row">
+            <span class="step-num-badge">2</span>
+            <span>タイムラインに追加された効果音クリップを<strong>ドラッグ</strong>して、シーン切り替えのタイミングに合わせる</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-sfx-02-timeline.png" alt="効果音タイムライン">
+            <div class="img-marker" style="bottom:22%; left:18%;">効果音クリップ</div>
+          </div>
+          <p class="img-cap">【スクショ：タイムラインに効果音が追加された状態】</p>
+
+          <div class="tip-box">
+            <div class="tip-icon">💡</div>
+            <div><strong>使い分けの目安：</strong>場面切り替え → 「ポン」系 ／ テキスト出現 → 「シュッ」「ポップ」系 ／ 料理・食べ物ワード → そのイメージに合った音</div>
+          </div>
+
+          <div class="section-label">動画の種類別 音量の目安</div>
+          <div style="background:#f8f9fc; border-radius:12px; padding:20px; margin:12px 0;">
+            <div style="margin-bottom:16px;">
+              <span class="type-badge badge-interview">インタビュー動画</span>
+              <div class="volume-meter" style="margin-top:8px;">
+                <span style="font-size:13px; width:100px;">15〜25%</span>
+                <div class="volume-bar"><div class="volume-fill" style="width:20%;"></div></div>
+              </div>
+              <p style="font-size:12px; color:#888; margin-top:4px;">セリフを聞き取りやすくするため小さめに</p>
+            </div>
+            <div style="margin-bottom:16px;">
+              <span class="type-badge badge-event">イベント告知動画</span>
+              <div class="volume-meter" style="margin-top:8px;">
+                <span style="font-size:13px; width:100px;">40〜60%</span>
+                <div class="volume-bar"><div class="volume-fill" style="width:50%;"></div></div>
+              </div>
+              <p style="font-size:12px; color:#888; margin-top:4px;">明るい雰囲気を作るため少し大きめに</p>
+            </div>
+            <div>
+              <span class="type-badge badge-vlog">vlog・活動記録</span>
+              <div class="volume-meter" style="margin-top:8px;">
+                <span style="font-size:13px; width:100px;">30〜50%</span>
+                <div class="volume-bar"><div class="volume-fill" style="width:40%;"></div></div>
+              </div>
+              <p style="font-size:12px; color:#888; margin-top:4px;">映像に合わせてメリハリをつける</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 8 -->
+        <div class="step-card" id="step8">
+          <div class="step-header">
+            <div class="step-number">STEP<span>8</span></div>
+            <div>
+              <div class="step-title">トランジション（場面切り替え）</div>
+              <div class="step-subtitle">クリップのつなぎ目に演出を入れる</div>
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <div class="tip-icon">💡</div>
+            <div>islaでは<strong>トランジションタブは使わず</strong>、キーフレームで手動にズーム・スライドを作っています。</div>
+          </div>
+
+          <div class="section-label">① ズームイン（人物にクローズアップ）</div>
+
+          <div class="step-row">
+            <span class="step-num-badge">1</span>
+            <span>カットしたいシーンで<kbd>Ctrl</kbd>+<kbd>B</kbd>で分割 → ズームインしたいクリップを選択</span>
+          </div>
+          <div class="step-row">
+            <span class="step-num-badge">2</span>
+            <span>右パネルの<strong>「スケール」</strong>スライダーを右に動かして拡大（200〜400%が目安）</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-zoom-01-scale.png" alt="スケール拡大">
+            <div class="img-marker" style="top:18%; right:3%;">スケールを上げる</div>
+          </div>
+          <p class="img-cap">【スクショ：スケール308%でズームインした状態】</p>
+
+          <div class="section-label">② スライド（横に流れる移動）</div>
+
+          <div class="tip-box">
+            <div class="tip-icon">📌</div>
+            <div>スライドは「<strong>スタート地点のX値</strong>」と「<strong>終点のX値</strong>」の2つのキーフレームを打つだけ！CapCutが間を自動で補間してくれます。</div>
+          </div>
+
+          <div class="step-row">
+            <span class="step-num-badge">1</span>
+            <span>スケールを<strong>300%前後に拡大</strong>してから、タイムラインの<strong>スライド開始点</strong>に再生ヘッドを合わせる</span>
+          </div>
+          <div class="step-row">
+            <span class="step-num-badge">2</span>
+            <span>右パネル「位置」のX値を設定（スライドの始まりの位置）→ 「位置」の行にある <strong>◇マーク</strong> をクリックしてキーフレームを打つ</span>
+          </div>
+
+          <div class="img-wrap">
+            <img src="images/capcut-slide-keyframe-01.png" alt="スタートキーフレーム設定">
+            <div class="img-marker" style="top:5%; right:1%;">スケール 308%</div>
+            <div class="img-marker" style="top:14%; right:1%;">位置 X: −391 → ◇で打つ</div>
+            <div class="img-marker" style="bottom:28%; left:16%;">① スタート地点に再生ヘッド</div>
+          </div>
+          <p class="img-cap">ステップ①②：スタート位置でキーフレームを設定した状態（X: −391）</p>
+
+          <div class="step-row">
+            <span class="step-num-badge">3</span>
+            <span>タイムラインで<strong>スライドの終点</strong>に再生ヘッドを移動 → 「位置」のX値を変更するだけで自動でキーフレームが追加されスライド完成</span>
+          </div>
+
+          <div class="img-wrap">
+            <img src="images/capcut-slide-keyframe-02.png" alt="終点キーフレーム設定">
+            <div class="img-marker" style="top:5%; right:1%;">スケール 308%（そのまま）</div>
+            <div class="img-marker" style="top:14%; right:1%;">位置 X: 1542 に変更</div>
+            <div class="img-marker" style="bottom:28%; left:35%;">② 終点に再生ヘッドを移動</div>
+          </div>
+          <p class="img-cap">ステップ③：終点でX値を変えると自動でキーフレームが追加される（X: 1542）</p>
+
+          <div class="warn-box">
+            <div>⚠️</div>
+            <div>スケールが小さいまま位置を動かすと映像の端が見えてしまいます。スライドを使う場合は<strong>スケールを300%以上に拡大してから</strong>X値を調整してください。</div>
+          </div>
+        </div>
+      </div><!-- /edit -->
+
+      <!-- ===== TAB: 仕上げ ===== -->
+      <div class="tab-section" data-tab="finish">
+        <div class="section-heading">仕上げフェーズ — STEP 09 〜 13</div>
+
+        <div class="chara-box">
+          <img src="images/mascot-2-jump.png" alt="キャラクター" class="chara-img">
+          <div class="chara-bubble">
+            <span class="chara-name">🎓 コネマグ — isla × Connect</span>
+            編集お疲れ様！最後は<strong>書き出し</strong>と仕上げだよ。<br>
+            ここをちゃんとやれば完成動画がSNSにそのまま投稿できるよ🎬✨
+          </div>
+        </div>
+
+        <!-- STEP 9 -->
+        <div class="step-card" id="step9">
+          <div class="step-header">
+            <div class="step-number">STEP<span>9</span></div>
+            <div>
+              <div class="step-title">書き出し（完成動画の保存）</div>
+              <div class="step-subtitle">編集した動画をファイルとして保存する</div>
+            </div>
+          </div>
+
+          <div class="step-row">
+            <span class="step-num-badge">1</span>
+            <span>右上の<strong>「エクスポート」</strong>をクリック</span>
+          </div>
+          <div class="step-row">
+            <span class="step-num-badge">2</span>
+            <span>設定を確認して<strong>「エクスポート」</strong>ボタンをクリック</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-export-01.png" alt="エクスポート設定画面">
+            <div class="img-marker" style="top:38%; right:22%;">解像度</div>
+            <div class="img-marker" style="top:51%; right:22%;">フレームレート</div>
+            <div class="img-marker" style="bottom:8%; right:22%;">エクスポートボタン</div>
+          </div>
+          <p class="img-cap">【スクショ：エクスポート設定画面】</p>
+
+          <table>
+            <tr><th>設定項目</th><th>推奨値</th><th>備考</th></tr>
+            <tr><td>解像度</td><td><strong>1080p</strong></td><td>SNS投稿の標準</td></tr>
+            <tr><td>フレームレート</td><td><strong>30fps</strong></td><td>通常の動画はこれでOK</td></tr>
+            <tr><td>フォーマット</td><td><strong>mov / MP4</strong></td><td>どのSNSでも使える</td></tr>
+          </table>
+
+          <div class="tip-box">
+            <div class="tip-icon">💡</div>
+            <div>容量を小さくしたいときは解像度を<strong>720p</strong>に下げてOK。書き出し後はGoogleドライブの共有フォルダにアップロードしてチームで共有しましょう。</div>
+          </div>
+        </div>
+
+        <!-- STEP 10 -->
+        <div class="step-card" id="step10">
+          <div class="step-header">
+            <div class="step-number">STEP<span>10</span></div>
+            <div>
+              <div class="step-title">SNSプレビュー（セーフゾーン）</div>
+              <div class="step-subtitle">TikTok・Instagramのいいね・コメント位置を確認しながら編集</div>
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <div class="tip-icon">💡</div>
+            <div>テキストやロゴが<strong>いいね・コメントボタンに被っていないか</strong>を編集中に確認できます。書き出し前に必ずチェックしましょう。</div>
+          </div>
+
+          <div class="step-row">
+            <span class="step-num-badge">1</span>
+            <span>プレビュー画面の<strong>下部ボタン</strong>をクリック → 「TikTok」「Instagramリール」などを選ぶ</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-safezone-01-menu.png" alt="SNSプレビューメニュー">
+            <div class="img-marker" style="bottom:32%; right:10%;">ここをクリック</div>
+          </div>
+          <p class="img-cap">【スクショ：プラットフォーム選択メニュー】</p>
+
+          <div class="step-row">
+            <span class="step-num-badge">2</span>
+            <span>プレビューにSNSのUIが薄く表示される → <strong>いいね・コメント・シェアボタンの位置</strong>にテキストが被っていないか確認する</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-safezone-02-preview.png" alt="Instagramリールプレビュー">
+            <div class="img-marker" style="top:40%; right:2%;">いいね・コメント位置</div>
+            <div class="img-marker" style="bottom:15%; left:10%;">アカウント名エリア</div>
+          </div>
+          <p class="img-cap">【スクショ：Instagramリールのセーフゾーン表示】</p>
+
+          <div class="step-row">
+            <span class="step-num-badge">3</span>
+            <span>テキストやロゴの位置を調整しながら編集。確認が終わったら「なし」に戻してOK</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-safezone-03-editing.png" alt="セーフゾーン表示しながら編集">
+            <div class="img-marker" style="top:40%; right:2%;">ここに被らないように</div>
+          </div>
+          <p class="img-cap">【スクショ：セーフゾーンを確認しながらテキスト編集】</p>
+        </div>
+
+        <!-- STEP 11 -->
+        <div class="step-card" id="step11">
+          <div class="step-header">
+            <div class="step-number">STEP<span>11</span></div>
+            <div>
+              <div class="step-title">自動キャプション</div>
+              <div class="step-subtitle">AIが話し声を自動で字幕にしてくれる機能</div>
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <div class="tip-icon">💡</div>
+            <div>セリフを手打ちする手間が大幅に省けます。精度は高いですが、固有名詞などは後で修正してください。</div>
+          </div>
+
+          <div class="step-row">
+            <span class="step-num-badge">1</span>
+            <span>上部メニューの<strong>「キャプション」</strong>をクリック → <strong>「自動キャプション」</strong>を選択</span>
+          </div>
+          <div class="step-row">
+            <span class="step-num-badge">2</span>
+            <span>「話されている言語」を<strong>「日本語」</strong>に設定 → 「2か国語キャプション」で英語など翻訳先を選ぶ（不要なら「なし」）</span>
+          </div>
+          <div class="step-row">
+            <span class="step-num-badge">3</span>
+            <span><strong>「生成」</strong>ボタンをクリック → 自動で字幕が追加される</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-caption-01-auto.png" alt="自動キャプション設定">
+            <div class="img-marker" style="top:8%; left:2%;">① キャプションをクリック</div>
+            <div class="img-marker" style="top:18%; left:2%;">② 言語を選ぶ</div>
+            <div class="img-marker" style="bottom:7%; left:35%;">③ 生成をクリック</div>
+          </div>
+          <p class="img-cap">【スクショ：自動キャプション設定画面】</p>
+
+          <div class="warn-box">
+            <div>⚠️</div>
+            <div>生成後はタイムラインに字幕クリップが追加されます。<strong>必ず1つずつ読み直して修正</strong>してください。</div>
+          </div>
+
+          <div class="section-label">生成後 — 字幕スタイルを白に統一する</div>
+
+          <div class="step-row">
+            <span class="step-num-badge">4</span>
+            <span>タイムラインの字幕クリップを全選択 → 右パネル「テキスト」タブ →「色」を<strong>白（#FFFFFF）</strong>に変更 → 縁取りも白か黒に統一する</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-caption-style.png" alt="キャプションスタイル設定">
+            <div class="img-marker" style="top:6%; right:20%;">テキストタブ</div>
+            <div class="img-marker" style="top:33%; right:3%;">色を白に変更</div>
+            <div class="img-marker" style="top:52%; right:3%;">プリセットスタイルも使える</div>
+          </div>
+          <p class="img-cap">【スクショ：キャプションのテキストスタイル設定画面】</p>
+
+          <div class="section-label">生成後の修正チェックリスト</div>
+          <ul class="checklist">
+            <li>固有名詞（地名・料理名・人名）が正しく認識されているか確認する</li>
+            <li>1つの字幕に長いセリフが詰まっている場合は、読みやすい位置で分割する</li>
+            <li>句読点・「が・は・も」など助詞の前後で自然な区切りになっているか確認する</li>
+            <li>字幕が映像のセリフとズレていないか、再生しながら確認する</li>
+          </ul>
+
+          <div class="practice-box">
+            <div class="label">POINT — islaフィードバックより</div>
+            <p>「自動字幕は生成後に、読みやすいよう修正してほしい」というフィードバックがあります。生成そのままで使わず、<strong>必ず見直し・修正をセットで行う</strong>のがislaのルールです。</p>
+          </div>
+        </div>
+
+        <!-- STEP 12 -->
+        <div class="step-card" id="step12">
+          <div class="step-header">
+            <div class="step-number">STEP<span>12</span></div>
+            <div>
+              <div class="step-title">タイムライン拡大・縮小</div>
+              <div class="step-subtitle">細かい編集は拡大して作業しよう</div>
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <div class="tip-icon">💡</div>
+            <div>カットや字幕の位置をミリ単位で合わせたいときは、タイムラインを拡大すると作業しやすくなります。</div>
+          </div>
+
+          <div class="step-row">
+            <span class="step-num-badge">1</span>
+            <span>タイムライン下部の<strong>スライダー（ − ▬ + ）</strong>を右にドラッグ → タイムラインが拡大される</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-timeline-zoom-01.png" alt="タイムライン拡大スライダー">
+            <div class="img-marker" style="bottom:18%; left:38%;">ここをドラッグ</div>
+          </div>
+          <p class="img-cap">【スクショ：タイムライン拡大スライダー】</p>
+
+          <div class="step-row">
+            <span class="step-num-badge">2</span>
+            <span>拡大された状態でカット位置を確認・調整する。左右にスクロールしてクリップを移動できる</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-timeline-zoom-02.png" alt="タイムライン拡大後の表示">
+            <div class="img-marker" style="top:70%; left:5%;">字幕クリップが細かく見える</div>
+          </div>
+          <p class="img-cap">【スクショ：タイムライン拡大後の表示】</p>
+
+          <div class="step-row">
+            <span class="step-num-badge">3</span>
+            <span>全体を確認したいときはスライダーを左に戻して縮小。<kbd>Ctrl</kbd> + マウスホイールでも拡大・縮小できる</span>
+          </div>
+          <div class="img-wrap">
+            <img src="images/capcut-timeline-zoom-03.png" alt="タイムライン縮小・全体表示">
+            <div class="img-marker" style="bottom:18%; left:30%;">スライダーを左に戻す</div>
+          </div>
+          <p class="img-cap">【スクショ：タイムライン全体表示】</p>
+        </div>
+
+        <!-- STEP 13 -->
+        <div class="step-card" id="step13">
+          <div class="step-header">
+            <div class="step-number">STEP<span>13</span></div>
+            <div>
+              <div class="step-title">ロゴ・透かしを入れる</div>
+              <div class="step-subtitle">ConnectロゴをSNS動画に重ねる方法</div>
+            </div>
+          </div>
+
+          <div class="tip-box">
+            <div class="tip-icon">💡</div>
+            <div>「Connect」ロゴを動画の隅に重ねることでブランド感が出ます。透明度を下げると自然に溶け込みます。</div>
+          </div>
+
+          <div class="step-row">
+            <span class="step-num-badge">1</span>
+            <span>上部メニューの<strong>「メディア」</strong>をクリック → <strong>「インポート」</strong>でConnectロゴのPNGファイルを読み込む</span>
+          </div>
+          <div class="step-row">
+            <span class="step-num-badge">2</span>
+            <span>メディアパネルに表示されたロゴを、タイムラインの<strong>空白トラック（映像の上）</strong>にドラッグして重ねる</span>
+          </div>
+          <div class="step-row">
+            <span class="step-num-badge">3</span>
+            <span>プレビュー画面でロゴをドラッグして<strong>右下や右上</strong>に配置 → ロゴの角をドラッグしてサイズを調整する</span>
+          </div>
+          <div class="step-row">
+            <span class="step-num-badge">4</span>
+            <span>右パネルの<strong>「ベーシック」→「不透明度」</strong>のスライダーを動かして透明度を調整（70〜80%が自然に見えやすい）</span>
+          </div>
+
+          <div class="warn-box">
+            <div>⚠️</div>
+            <div>ロゴクリップの長さを動画全体と合わせること。短いとロゴが途中で消えてしまいます。ロゴクリップの右端をドラッグして長さを伸ばしてください。</div>
+          </div>
+
+          <div class="practice-box">
+            <div class="label">POINT</div>
+            <p>ファイル形式は背景が透明な<strong>PNG</strong>を使うこと。JPGだと白背景ごと表示されてしまいます。</p>
+          </div>
+        </div>
+      </div><!-- /finish -->
+
+      <!-- ===== TAB: SOS ===== -->
+      <div class="tab-section" data-tab="sos">
+        <div class="section-heading">サポート</div>
+
+        <!-- よくある修正依頼 -->
+        <div class="sos-card" id="feedback" style="border-left-color: #c9a217;">
+          <div class="sos-header">
+            <div class="sos-badge" style="background: linear-gradient(135deg, #b8860b, #c9a217); font-size:20px;">💬</div>
+            <div>
+              <div class="step-title">よくある修正依頼と対処法</div>
+              <div class="step-subtitle">チームからフィードバックが来たらここを確認しよう</div>
+            </div>
+          </div>
+
+          <table>
+            <tr><th>修正依頼の内容</th><th>原因</th><th>対処法</th></tr>
+            <tr>
+              <td>「字幕の色が多すぎる」</td>
+              <td>登場人物ごとや感情ごとに色を変えすぎている</td>
+              <td>文字全体を白に統一。色を変えるのはキーワード（料理名・地名）のみ、赤か黄の2色まで</td>
+            </tr>
+            <tr>
+              <td>「字幕が読みにくい」</td>
+              <td>1つの字幕に長いセリフが詰まっている・縁取りがない</td>
+              <td>自然な区切りで字幕を分割する。縁取り（ストローク）を白または黒に設定する</td>
+            </tr>
+            <tr>
+              <td>「自動字幕が違う言葉になってる」</td>
+              <td>固有名詞・方言の誤認識</td>
+              <td>字幕クリップをダブルクリックして手動で修正する</td>
+            </tr>
+            <tr>
+              <td>「カット切り替えのタイミングがズレてる」</td>
+              <td>発話の途中でカットされている</td>
+              <td>タイムラインを拡大（STEP12参照）して、セリフの終わりに合わせてカット位置を調整する</td>
+            </tr>
+            <tr>
+              <td>「効果音のタイミングが合ってない」</td>
+              <td>効果音クリップの位置がズレている</td>
+              <td>タイムライン上で効果音クリップをドラッグして、シーン切り替えの瞬間に合わせる</td>
+            </tr>
+          </table>
+        </div>
+
+        <div class="sos-card" id="sos">
+          <div class="sos-header">
+            <div class="sos-badge">❓</div>
+            <div>
+              <div class="step-title">困ったときは</div>
+              <div class="step-subtitle">よくあるトラブルと対処法</div>
+            </div>
+          </div>
+
+          <table>
+            <tr><th>症状</th><th>対処法</th></tr>
+            <tr><td>動画に音声がない</td><td>音声クリップを右クリック →「ミュート解除」</td></tr>
+            <tr><td>文字が動画からはみ出る</td><td>プレビュー画面でテキストをドラッグして位置を調整</td></tr>
+            <tr><td>書き出した動画が重い</td><td>エクスポート時に解像度を720pに下げる</td></tr>
+            <tr><td>操作を間違えた</td><td><kbd>Ctrl + Z</kbd> で元に戻す</td></tr>
+            <tr><td>アプリが固まった</td><td>保存してからCapCutを再起動</td></tr>
+          </table>
+        </div>
+
+        <div class="final-check" id="final">
+          <h2>✅ 書き出し前 最終チェックリスト</h2>
+          <ul>
+            <li>カット編集で不要な部分を削除した</li>
+            <li>テロップの文字・フォント・色を確認した</li>
+            <li>効果音のタイミングが映像に合っている</li>
+            <li>最初から最後まで通して再生した</li>
+            <li>セーフゾーンでいいね・コメント位置を確認した</li>
+            <li>解像度1080p・mov/MP4で書き出した</li>
+            <li>Googleドライブの共有フォルダにアップした</li>
+          </ul>
+        </div>
+
+        <!-- サムネイルについて -->
+        <div class="sos-card" style="border-left-color: var(--gold);">
+          <div class="sos-header">
+            <div class="sos-badge" style="background: linear-gradient(135deg, #b8860b, #c9a217); font-size: 20px;">🖼️</div>
+            <div>
+              <div class="step-title">サムネイルについて</div>
+              <div class="step-subtitle">SNS投稿用のサムネはCapCutとは別で作成する</div>
+            </div>
+          </div>
+          <div class="tip-box">
+            <div class="tip-icon">💡</div>
+            <div>InstagramリールやTikTokのサムネイル（表紙画像）は、<strong>Canva</strong>で別途作成してください。CapCutの書き出し画面からもサムネ設定はできますが、デザイン性を出したいときはCanvaが◎です。</div>
+          </div>
+          <table>
+            <tr><th>ツール</th><th>用途</th></tr>
+            <tr><td><strong>CapCut</strong></td><td>動画の編集・書き出し</td></tr>
+            <tr><td><strong>Canva</strong></td><td>サムネイル（表紙画像）のデザイン作成</td></tr>
+          </table>
+          <p style="font-size:13px; color: var(--muted); margin-top:12px;">作成したサムネはGoogleドライブの共有フォルダに保存して、チームで共有しましょう。</p>
+        </div>
+
+        <!-- 締め -->
+        <div class="final-check" style="background: linear-gradient(135deg, #0B3899, #1B5EE0);">
+          <h2>🌏 慣れてきたら、もっと上を目指そう</h2>
+          <p style="color: rgba(255,255,255,0.75); font-size:14px; margin-bottom:20px;">
+            このマニュアルは<strong>isla・Connectのボランティアメンバー全員</strong>を対象に作成しています。基本操作に慣れてきたら、過去のisla動画や他のサークル・インフルエンサーの編集スタイルを参考にしながら、自分なりの表現を見つけていきましょう。
+          </p>
+          <ul style="list-style:none; padding:0;">
+            <li style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.08); font-size:14px; color:rgba(255,255,255,0.8);">
+              <span style="color:var(--gold); font-size:16px;">→</span>
+              <span>過去のisla動画を見て、カット・テロップ・効果音のタイミングを研究する</span>
+            </li>
+            <li style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.08); font-size:14px; color:rgba(255,255,255,0.8);">
+              <span style="color:var(--gold); font-size:16px;">→</span>
+              <span>TikTok・Instagramで気になった動画の編集手法をCapCutで再現してみる</span>
+            </li>
+            <li style="display:flex; gap:12px; padding:10px 0; border-bottom:1px solid rgba(255,255,255,0.08); font-size:14px; color:rgba(255,255,255,0.8);">
+              <span style="color:var(--gold); font-size:16px;">→</span>
+              <span>ボランティア活動・国際交流イベントなど、動画の種類に合わせてスタイルを使い分ける</span>
+            </li>
+            <li style="display:flex; gap:12px; padding:10px 0; font-size:14px; color:rgba(255,255,255,0.8);">
+              <span style="color:var(--gold); font-size:16px;">→</span>
+              <span>分からないことがあれば広報チームに気軽に聞いてください</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- 締めのキャラ -->
+        <div class="chara-box" style="margin-top: 36px;">
+          <img src="images/mascot-5-wink.png" alt="コネマグ" class="chara-img" style="width:110px;height:110px;">
+          <div class="chara-bubble">
+            <span class="chara-name">🎓 コネマグ — isla × Connect</span>
+            最後まで読んでくれてありがとう！<br>
+            最初はうまくいかなくても全然OK。<strong>何度でも作ってみる</strong>ことが一番の近道だよ💪<br>
+            islaの動画、一緒に最高のものにしていこう🎬
+          </div>
+        </div>
+
+      </div><!-- /sos -->
+
+    </main>
+
+    <footer>
+      <span>isla 広報チーム · CapCut PC版 操作マニュアル</span>
+      <span>Connect Kindai University</span>
+    </footer>
+
+  </div><!-- /content -->
+</div><!-- /layout -->
+
+<script>
+  // ===== HAMBURGER =====
+  const hamburger = document.getElementById('hamburger');
+  const sidebar   = document.getElementById('sidebar');
+  const overlay   = document.getElementById('overlay');
+  const layout    = document.querySelector('.layout');
+
+  const isMobile = () => window.innerWidth <= 768;
+
+  // 初期状態: PC=開いてる / スマホ=閉じてる
+  function initSidebar() {
+    if (isMobile()) {
+      sidebar.classList.remove('open');
+      hamburger.classList.remove('open');
+      overlay.classList.remove('show');
+      layout.classList.remove('sidebar-collapsed');
+    } else {
+      sidebar.classList.remove('open'); // PCはCSSで制御
+      layout.classList.remove('sidebar-collapsed');
+    }
+  }
+  initSidebar();
+  window.addEventListener('resize', initSidebar);
+
+  function toggleSidebar() {
+    if (isMobile()) {
+      // スマホ: open クラスでスライドイン
+      const isOpen = sidebar.classList.toggle('open');
+      hamburger.classList.toggle('open', isOpen);
+      overlay.classList.toggle('show', isOpen);
+    } else {
+      // PC: layout に sidebar-collapsed を付けてコンテンツ幅も変える
+      const isCollapsed = layout.classList.toggle('sidebar-collapsed');
+      hamburger.classList.toggle('open', isCollapsed);
+    }
+  }
+  function closeSidebar() {
+    if (isMobile()) {
+      sidebar.classList.remove('open');
+      hamburger.classList.remove('open');
+      overlay.classList.remove('show');
+    }
+  }
+  hamburger.addEventListener('click', toggleSidebar);
+  overlay.addEventListener('click', closeSidebar);
+
+  // ===== TAB SWITCHING =====
+  const tabBtns = document.querySelectorAll('.tab-btn');
+  const tabSections = document.querySelectorAll('.tab-section');
+  const navGroups = document.querySelectorAll('.nav-group');
+
+  tabBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const tab = btn.dataset.tab;
+
+      tabBtns.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      tabSections.forEach(s => {
+        s.classList.toggle('active', s.dataset.tab === tab);
+      });
+
+      navGroups.forEach(g => {
+        g.classList.toggle('active', g.dataset.tab === tab);
+      });
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      closeSidebar();
+    });
+  });
+
+  // ===== SCROLL SPY =====
+  const stepCards = document.querySelectorAll('[id^="step"], [id="sos"], [id="final"]');
+  const navItems = document.querySelectorAll('.nav-item');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = '#' + entry.target.id;
+        navItems.forEach(item => {
+          item.classList.toggle('active', item.getAttribute('href') === id);
+        });
+      }
+    });
+  }, { rootMargin: '-15% 0px -65% 0px' });
+
+  stepCards.forEach(card => observer.observe(card));
+</script>
+
+</body>
+</html>
