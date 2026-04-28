@@ -682,6 +682,13 @@
     ul { padding-left: 20px; font-size: 14px; }
     li { margin: 6px 0; }
 
+    /* モバイルのみ改行（PCでは非表示） */
+    .br-mob { display: none; }
+    @media (max-width: 768px) {
+      .br-mob { display: block; height: 0; }
+      .hero-badge { font-size: 10px; letter-spacing: 0.02em; }
+    }
+
     /* ===== NEXT PHASE BUTTON (mobile only) ===== */
     .next-phase-btn {
       display: none;
@@ -1001,8 +1008,7 @@
           <img src="images/mascot-1-standard.png" alt="キャラクター" class="chara-img">
           <div class="chara-bubble">
             <span class="chara-name">🎓 コネマグ — isla × Connect</span>
-            はじめまして！isla広報チームの動画編集をサポートするよ。<br>
-            まず<strong>CapCutのインストール</strong>からはじめよう！難しくないから安心してね👍
+            はじめまして！isla広報チームの動画編集をサポートするよ。まず<strong>CapCutのインストール</strong>からはじめよう！難しくないから安心してね👍
           </div>
         </div>
 
@@ -1088,7 +1094,7 @@
 
           <div class="step-row">
             <span class="step-num-badge">1</span>
-            <span>ブラウザでGoogleドライブを開き、<strong>「共有ドライブ」→「GEC広報部2026」</strong>→ 対象フォルダへ移動する</span>
+            <span>ブラウザでGoogleドライブを開き、<span class="br-mob"></span><strong>「共有ドライブ」→「GEC広報部2026」</strong><span class="br-mob"></span>→ 対象フォルダへ移動する</span>
           </div>
           <div class="img-wrap">
             <img src="images/gdrive-01-folder.png" alt="Googleドライブ フォルダ画面">
@@ -1115,7 +1121,7 @@
 
           <div class="step-row">
             <span class="step-num-badge">3</span>
-            <span>CapCutを起動 → 左上の<strong>「インポート」</strong>をクリック → ファイル選択画面で<strong>「ダウンロード」</strong>フォルダを選択 → ファイルをクリックして<strong>「開く」</strong></span>
+            <span>CapCutを起動<span class="br-mob"></span>→ 左上の<strong>「インポート」</strong>をクリック<span class="br-mob"></span>→ ファイル選択画面で<strong>「ダウンロード」</strong>フォルダを選択<span class="br-mob"></span>→ ファイルをクリックして<strong>「開く」</strong></span>
           </div>
           <div class="img-wrap">
             <img src="images/capcut-01-import.png" alt="CapCut インポート画面">
@@ -1193,8 +1199,7 @@
           <img src="images/mascot-5-wink.png" alt="キャラクター" class="chara-img">
           <div class="chara-bubble">
             <span class="chara-name">🎓 コネマグ — isla × Connect</span>
-            準備ができたらいよいよ編集開始！<br>
-            <strong>カット編集</strong>が動画クオリティを一番左右するから、ここは丁寧にやろう✂️
+            準備ができたらいよいよ編集開始！<strong>カット編集</strong>が動画クオリティを一番左右するから、ここは丁寧にやろう✂️
           </div>
         </div>
 
@@ -1312,7 +1317,7 @@
 
           <div class="step-row">
             <span class="step-num-badge">1</span>
-            <span>左パネルの<strong>「テキスト」</strong>をクリック → <strong>「デフォルトテキスト」</strong>をタイムラインにドラッグ</span>
+            <span>左パネルの<strong>「テキスト」</strong>をクリック<span class="br-mob"></span>→ <strong>「デフォルトテキスト」</strong>をタイムラインにドラッグ</span>
           </div>
           <div class="img-wrap">
             <img src="images/capcut-text-01-panel.png" alt="テキストパネル">
@@ -1323,7 +1328,7 @@
 
           <div class="step-row">
             <span class="step-num-badge">2</span>
-            <span>タイムラインのテキストクリップをクリック → 右パネルで<strong>フォント・サイズ・色</strong>を設定する</span>
+            <span>タイムラインのテキストクリップをクリック<span class="br-mob"></span>→ 右パネルで<strong>フォント・サイズ・色</strong>を設定する</span>
           </div>
           <div class="img-wrap">
             <img src="images/capcut-text-02-style.png" alt="テキストスタイル設定">
@@ -1340,7 +1345,7 @@
 
           <div class="step-row">
             <span class="step-num-badge">3</span>
-            <span>プレビュー画面のテキストを<strong>ダブルクリック</strong>して文字を入力・位置をドラッグで調整</span>
+            <span>プレビュー画面のテキストを<strong>ダブルクリック</strong>して文字を入力<span class="br-mob"></span>・位置をドラッグで調整</span>
           </div>
           <div class="img-wrap">
             <img src="images/capcut-text-03-preview.png" alt="テキストプレビュー">
@@ -1350,7 +1355,7 @@
 
           <div class="step-row">
             <span class="step-num-badge">4</span>
-            <span><strong>キーワードだけ色を変える：</strong>テキストをダブルクリック → 変えたい単語をドラッグで選択 → 右パネルの「色」でカラーピッカーを開いて色を変更</span>
+            <span><strong>キーワードだけ色を変える：</strong><span class="br-mob"></span>テキストをダブルクリック<span class="br-mob"></span>→ 変えたい単語をドラッグで選択<span class="br-mob"></span>→ 右パネルの「色」でカラーピッカーを開いて色を変更</span>
           </div>
           <div class="img-wrap">
             <img src="images/capcut-text-04-keyword.png" alt="キーワード色変え">
@@ -1411,7 +1416,7 @@
 
           <div class="step-row">
             <span class="step-num-badge">1</span>
-            <span>左パネルの<strong>「オーディオ」</strong>→<strong>「サウンドエフェクト」</strong>をクリック → 検索欄に「ポン」などと入力して効果音を探す</span>
+            <span>左パネルの<strong>「オーディオ」</strong>→<strong>「サウンドエフェクト」</strong>をクリック<span class="br-mob"></span>→ 検索欄に「ポン」などと入力して効果音を探す</span>
           </div>
           <div class="img-wrap">
             <img src="images/capcut-sfx-01-search.png" alt="サウンドエフェクト検索">
@@ -1423,7 +1428,7 @@
 
           <div class="step-row">
             <span class="step-num-badge">2</span>
-            <span>タイムラインに追加された効果音クリップを<strong>ドラッグ</strong>して、シーン切り替えのタイミングに合わせる</span>
+            <span>タイムラインに追加された効果音クリップを<strong>ドラッグ</strong>して<span class="br-mob"></span>シーン切り替えのタイミングに合わせる</span>
           </div>
           <div class="img-wrap">
             <img src="images/capcut-sfx-02-timeline.png" alt="効果音タイムライン">
@@ -1509,7 +1514,7 @@
           </div>
           <div class="step-row">
             <span class="step-num-badge">2</span>
-            <span>右パネル「位置」のX値を設定（スライドの始まりの位置）→ 「位置」の行にある <strong>◇マーク</strong> をクリックしてキーフレームを打つ</span>
+            <span>右パネル「位置」のX値を設定（スライドの始まりの位置）<span class="br-mob"></span>→ 「位置」の行にある <strong>◇マーク</strong> をクリックしてキーフレームを打つ</span>
           </div>
 
           <div class="img-wrap">
@@ -1522,7 +1527,7 @@
 
           <div class="step-row">
             <span class="step-num-badge">3</span>
-            <span>タイムラインで<strong>スライドの終点</strong>に再生ヘッドを移動 → 「位置」のX値を変更するだけで自動でキーフレームが追加されスライド完成</span>
+            <span>タイムラインで<strong>スライドの終点</strong>に再生ヘッドを移動<span class="br-mob"></span>→ 「位置」のX値を変更するだけで自動でキーフレームが追加されスライド完成</span>
           </div>
 
           <div class="img-wrap">
@@ -1548,8 +1553,7 @@
           <img src="images/mascot-2-jump.png" alt="キャラクター" class="chara-img">
           <div class="chara-bubble">
             <span class="chara-name">🎓 コネマグ — isla × Connect</span>
-            編集お疲れ様！最後は<strong>書き出し</strong>と仕上げだよ。<br>
-            ここをちゃんとやれば完成動画がSNSにそのまま投稿できるよ🎬✨
+            編集お疲れ様！最後は<strong>書き出し</strong>と仕上げだよ。ここをちゃんとやれば完成動画がSNSにそのまま投稿できるよ🎬✨
           </div>
         </div>
 
@@ -1609,7 +1613,7 @@
 
           <div class="step-row">
             <span class="step-num-badge">1</span>
-            <span>プレビュー画面の<strong>下部ボタン</strong>をクリック → 「TikTok」「Instagramリール」などを選ぶ</span>
+            <span>プレビュー画面の<strong>下部ボタン</strong>をクリック<span class="br-mob"></span>→ 「TikTok」「Instagramリール」などを選ぶ</span>
           </div>
           <div class="img-wrap">
             <img src="images/capcut-safezone-01-menu.png" alt="SNSプレビューメニュー">
@@ -1619,7 +1623,7 @@
 
           <div class="step-row">
             <span class="step-num-badge">2</span>
-            <span>プレビューにSNSのUIが薄く表示される → <strong>いいね・コメント・シェアボタンの位置</strong>にテキストが被っていないか確認する</span>
+            <span>プレビューにSNSのUIが薄く表示される<span class="br-mob"></span>→ <strong>いいね・コメント・シェアボタンの位置</strong>にテキストが被っていないか確認する</span>
           </div>
           <div class="img-wrap">
             <img src="images/capcut-safezone-02-preview.png" alt="Instagramリールプレビュー">
@@ -1656,15 +1660,15 @@
 
           <div class="step-row">
             <span class="step-num-badge">1</span>
-            <span>上部メニューの<strong>「キャプション」</strong>をクリック → <strong>「自動キャプション」</strong>を選択</span>
+            <span>上部メニューの<strong>「キャプション」</strong>をクリック<span class="br-mob"></span>→ <strong>「自動キャプション」</strong>を選択</span>
           </div>
           <div class="step-row">
             <span class="step-num-badge">2</span>
-            <span>「話されている言語」を<strong>「日本語」</strong>に設定 → 「2か国語キャプション」で英語など翻訳先を選ぶ（不要なら「なし」）</span>
+            <span>「話されている言語」を<strong>「日本語」</strong>に設定<span class="br-mob"></span>→ 「2か国語キャプション」で翻訳先を選ぶ（不要なら「なし」）</span>
           </div>
           <div class="step-row">
             <span class="step-num-badge">3</span>
-            <span><strong>「生成」</strong>ボタンをクリック → 自動で字幕が追加される</span>
+            <span><strong>「生成」</strong>ボタンをクリック<span class="br-mob"></span>→ 自動で字幕が追加される</span>
           </div>
           <div class="img-wrap">
             <img src="images/capcut-caption-01-auto.png" alt="自動キャプション設定">
@@ -1683,7 +1687,7 @@
 
           <div class="step-row">
             <span class="step-num-badge">4</span>
-            <span>タイムラインの字幕クリップを全選択 → 右パネル「テキスト」タブ →「色」を<strong>白（#FFFFFF）</strong>に変更 → 縁取りも白か黒に統一する</span>
+            <span>タイムラインの字幕クリップを全選択<span class="br-mob"></span>→ 右パネル「テキスト」タブ →「色」を<strong>白（#FFFFFF）</strong>に変更<span class="br-mob"></span>→ 縁取りも白か黒に統一する</span>
           </div>
           <div class="img-wrap">
             <img src="images/capcut-caption-style.png" alt="キャプションスタイル設定">
@@ -1724,7 +1728,7 @@
 
           <div class="step-row">
             <span class="step-num-badge">1</span>
-            <span>タイムライン下部の<strong>スライダー（ − ▬ + ）</strong>を右にドラッグ → タイムラインが拡大される</span>
+            <span>タイムライン下部の<strong>スライダー（ − ▬ + ）</strong>を右にドラッグ<span class="br-mob"></span>→ タイムラインが拡大される</span>
           </div>
           <div class="img-wrap">
             <img src="images/capcut-timeline-zoom-01.png" alt="タイムライン拡大スライダー">
@@ -1744,7 +1748,7 @@
 
           <div class="step-row">
             <span class="step-num-badge">3</span>
-            <span>全体を確認したいときはスライダーを左に戻して縮小。<kbd>Ctrl</kbd> + マウスホイールでも拡大・縮小できる</span>
+            <span>全体を確認したいときはスライダーを左に戻して縮小<span class="br-mob"></span><kbd>Ctrl</kbd> + マウスホイールでも拡大・縮小できる</span>
           </div>
           <div class="img-wrap">
             <img src="images/capcut-timeline-zoom-03.png" alt="タイムライン縮小・全体表示">
