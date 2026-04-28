@@ -680,6 +680,41 @@
     ul { padding-left: 20px; font-size: 14px; }
     li { margin: 6px 0; }
 
+    /* ===== NEXT PHASE BUTTON (mobile only) ===== */
+    .next-phase-btn {
+      display: none;
+    }
+    @media (max-width: 768px) {
+      .next-phase-btn {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        position: fixed;
+        bottom: 24px;
+        left: 50%;
+        transform: translateX(-50%) translateY(100px);
+        z-index: 180;
+        background: linear-gradient(135deg, #C9A217, #E0C040);
+        color: #0F1B2D;
+        font-size: 15px;
+        font-weight: 800;
+        font-family: 'Noto Sans JP', sans-serif;
+        padding: 14px 28px;
+        border-radius: 50px;
+        border: none;
+        box-shadow: 0 6px 24px rgba(201,162,23,0.5);
+        cursor: pointer;
+        white-space: nowrap;
+        transition: transform 0.35s cubic-bezier(.4,0,.2,1), opacity 0.35s;
+        opacity: 0;
+      }
+      .next-phase-btn.visible {
+        transform: translateX(-50%) translateY(0);
+        opacity: 1;
+      }
+    }
+
     /* ===== HAMBURGER BUTTON ===== */
     .hamburger {
       display: flex;
@@ -781,6 +816,9 @@
   </style>
 </head>
 <body>
+
+<!-- Next phase button (mobile) -->
+<button class="next-phase-btn" id="nextPhaseBtn">次のフェーズへ →</button>
 
 <!-- Hamburger button -->
 <button class="hamburger" id="hamburger" aria-label="メニュー">
@@ -1944,6 +1982,48 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
       closeSidebar();
     });
+  });
+
+  // ===== NEXT PHASE BUTTON =====
+  const nextPhaseBtn = document.getElementById('nextPhaseBtn');
+  const tabOrder = ['prep', 'edit', 'finish', 'sos'];
+  const tabLabels = { prep: '🎬 編集フェーズへ', edit: '✨ 仕上げフェーズへ', finish: '💡 ヘルプを見る' };
+
+  function getCurrentTab() {
+    return document.querySelector('.tab-btn.active')?.dataset.tab || 'prep';
+  }
+
+  function switchToTab(tabId) {
+    const btn = document.querySelector(`.tab-btn[data-tab="${tabId}"]`);
+    if (btn) btn.click();
+  }
+
+  function updateNextBtn() {
+    if (!isMobile()) { nextPhaseBtn.classList.remove('visible'); return; }
+    const cur = getCurrentTab();
+    const nextIdx = tabOrder.indexOf(cur) + 1;
+    if (nextIdx >= tabOrder.length) { nextPhaseBtn.classList.remove('visible'); return; }
+
+    // ページ下部80px以内になったら表示
+    const scrollBottom = window.innerHeight + window.scrollY;
+    const pageHeight = document.documentElement.scrollHeight;
+    if (scrollBottom >= pageHeight - 80) {
+      nextPhaseBtn.textContent = tabLabels[cur] || '次へ →';
+      nextPhaseBtn.classList.add('visible');
+    } else {
+      nextPhaseBtn.classList.remove('visible');
+    }
+  }
+
+  window.addEventListener('scroll', updateNextBtn, { passive: true });
+
+  nextPhaseBtn.addEventListener('click', () => {
+    const cur = getCurrentTab();
+    const nextIdx = tabOrder.indexOf(cur) + 1;
+    if (nextIdx < tabOrder.length) {
+      switchToTab(tabOrder[nextIdx]);
+      nextPhaseBtn.classList.remove('visible');
+    }
   });
 
   // ===== SCROLL SPY =====
