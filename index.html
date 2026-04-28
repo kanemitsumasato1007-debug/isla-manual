@@ -29,6 +29,8 @@
       background: var(--bg);
       color: var(--text);
       line-height: 1.7;
+      overflow-wrap: break-word;
+      word-break: auto-phrase;
     }
 
     /* ===== LAYOUT ===== */
@@ -802,11 +804,39 @@
       .shortcut-grid { grid-template-columns: 1fr; }
       .two-col { grid-template-columns: 1fr; }
 
-      .chara-box { flex-direction: column; align-items: flex-start; }
-      .chara-box.right { flex-direction: column; align-items: flex-end; }
-      .chara-bubble { max-width: 100%; font-size: 13px; }
-      .chara-bubble::before { display: none; }
-      .chara-box.right .chara-bubble::before { display: none; }
+      /* キャラ：吹き出しを上、キャラを下に */
+      .chara-box,
+      .chara-box.right {
+        flex-direction: column-reverse;
+        align-items: center;
+        gap: 0;
+      }
+      .chara-bubble {
+        max-width: 100%;
+        font-size: 13px;
+        border-radius: 16px;
+        margin-bottom: 0;
+        overflow-wrap: break-word;
+        word-break: auto-phrase;
+      }
+      /* 吹き出しの尻尾：下向き（キャラ方向） */
+      .chara-bubble::before,
+      .chara-box.right .chara-bubble::before {
+        display: block;
+        top: auto;
+        bottom: -11px;
+        left: 50%;
+        right: auto;
+        transform: translateX(-50%);
+        border: 6px solid transparent;
+        border-top-color: #0A2870;
+        border-right-color: transparent;
+        border-left-color: transparent;
+        border-bottom-color: transparent;
+      }
+      .chara-img {
+        margin-top: 2px;
+      }
 
       footer { flex-direction: column; gap: 4px; text-align: center; padding: 16px 12px; }
 
